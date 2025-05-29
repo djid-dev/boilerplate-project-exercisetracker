@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 app.post("/api/users", (req, res) => {
   const username = req.body.username;
   if (!username) {
-    return res.status(400).json({ error: "Username is required" });
+    return res.json({ error: "Username is required" });
   }
   const newUser = new User({ username });
   newUser
@@ -27,7 +27,7 @@ app.post("/api/users", (req, res) => {
       res.json({ username: user.username, _id: user._id });
     })
     .catch((err) => {
-      res.status(500).json({ error: "Error saving user" });
+      res.json({ error: "Error saving user" });
     });
 });
 
@@ -37,7 +37,7 @@ app.get("/api/users", (req, res) => {
       res.json(users);
     })
     .catch((err) => {
-      res.status(500).json({ error: "Error fetching users" });
+      res.json({ error: "Error fetching users" });
     });
 });
 
@@ -47,7 +47,6 @@ app.post("/api/users/:_id/exercises", (req, res) => {
 
   if (!description || !duration) {
     return res
-      .status(400)
       .json({ error: "Description and duration are required" });
   }
 
@@ -80,7 +79,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
     })
     .catch((err) => {
       console.error("Error saving exercise:", err);
-      res.status(500).json({ error: "Error saving exercise" });
+      res.json({ error: "Error saving exercise" });
     });
 });
 
@@ -129,7 +128,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Error fetching exercises" });
+    res.json({ error: "Error fetching exercises" });
   }
 });
 
